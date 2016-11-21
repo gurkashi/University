@@ -1,0 +1,11 @@
+#V 4    ; number of vertices n in graph (from 1 to n)
+
+#E 1 2 W1                 ; Edge from vertex 1 to vertex 2, weight 1
+#E 3 4 W1                 ; Edge from vertex 3 to vertex 4, weight 1
+#E 2 3 W1                 ; Edge from vertex 2 to vertex 3, weight 1
+#E 1 3 W4                 ; Edge from vertex 1 to vertex 3, weight 4
+#E 2 4 W5                 ; Edge from vertex 2 to vertex 4, weight 5
+#V 1 K 1 Form1            ; Vertex 1 initially contains a key with ID 1. Last word is an optional NAME of resource/key
+#V 1 K 2 BribeMoney       ; Vertex 1 initially contains a key with ID 2.
+#V 2 L 1 FileForm         ; Vertex 2 is blocked, requires key ID 1 to unblock. Last word is optional NAME of block
+#V 2 L 2 HungryOfficial   ; Vertex 2 is blocked, requires key ID 2 to unblock.
