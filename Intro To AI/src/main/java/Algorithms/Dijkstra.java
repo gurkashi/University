@@ -35,7 +35,7 @@ import java.util.*;
  21
  22      return dist[], prev[]
  */
-public class Dijkstra extends Algorithm {
+public class Dijkstra implements Algorithm {
     final Map<Vertex, Integer> distance;
     final Map<Vertex, Vertex> route;
     final Set<Vertex> unvisited;

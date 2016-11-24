@@ -41,7 +41,7 @@ public abstract class GraphElement implements Comparable<GraphElement>{
         return this.id;
     }
 
-    protected Graph getContext(){
+    public Graph getContext(){
         return this.context;
     }
 }

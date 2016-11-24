@@ -1,5 +1,5 @@
 package Algorithms;
 
-public abstract class Algorithm{
-    public abstract void execute();
+public interface Algorithm{
+    public void execute();
 }
