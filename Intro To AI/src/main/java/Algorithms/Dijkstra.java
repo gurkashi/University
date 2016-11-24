@@ -74,7 +74,7 @@ public class Dijkstra implements Algorithm {
             Vertex u = min.execute(unvisited);
             unvisited.remove(u);
 
-            for (Vertex v: u.getNeigbores()){
+            for (Vertex v: orderVerticesHeuristicaly(u.getNeigbores())){
                 int alternative = distance.get(u) + getWeight(u.getEdge(v));
                 if (alternative < distance.get(v)){
                     distance.put(v, alternative);
@@ -82,6 +82,10 @@ public class Dijkstra implements Algorithm {
                 }
             }
         }
+    }
+
+    private Collection<Vertex> orderVerticesHeuristicaly(Collection<Vertex> vertices){
+        return vertices;
     }
 
     protected boolean shouldUseVertex(Vertex vertex) {
