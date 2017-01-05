@@ -1,7 +1,8 @@
-package graphs;
+package ass4;
 
 import com.gurkashi.fj.lambdas.Predicate;
 import com.gurkashi.fj.queries.stracture.Queriable;
+import graphs.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,13 +13,9 @@ import java.util.Collection;
 import java.util.Scanner;
 
 /**
- * Created by Gur on 11/11/2016.
- *
- * IMPORTANT !!
- * Graph is directed
- *
+ * Created by Gur on 1/5/2017.
  */
-public class Graph {
+public class BayesNetworkGraph {
     public static final String KEYS = "keys";
     public static final String LOCKS = "locks";
     public static final String VERTICES = "vertices";
@@ -37,9 +34,8 @@ public class Graph {
     final Collection<Edge> edges;
     final Collection<Agent> agents;
     final int depth;
-    private double PBRC;
 
-    public Graph(int depth){
+    public BayesNetworkGraph(int depth){
         this.vertices = new ArrayList<Vertex>();
         this.edges = new ArrayList<Edge>();
         this.agents = new ArrayList<Agent>();
@@ -47,7 +43,7 @@ public class Graph {
     }
 
     public static boolean isDirected() {
-        return false;
+        return true;
     }
 
     @Override
@@ -67,10 +63,13 @@ public class Graph {
         return result.trim();
     }
 
-    public static Graph fromFile(String path, int depth) throws IOException {
-        Graph graph = new Graph(depth);
+    public static graphs.Graph fromFile(String path, int depth) throws IOException {
+        graphs.Graph graph = new graphs.Graph(depth);
 
         try(Scanner scanner = new Scanner(new File(path))){
+            String pbrcHeader = scanner.nextLine();
+            graph.setPBRC(Double.parseDouble(pbrcHeader.split(" ")[1]));
+
             String numOfVerticesHeader = scanner.nextLine();
             createInitialVertices(numOfVerticesHeader, graph);
             scanner.nextLine();
@@ -94,7 +93,7 @@ public class Graph {
         return graph;
     }
 
-    private static void configEdge(String[] parts, Graph graph) {
+    private static void configEdge(String[] parts, graphs.Graph graph) {
         Vertex from = graph.getVertex(parts[1]);
         Vertex to = graph.getVertex(parts[2]);
 
@@ -110,7 +109,7 @@ public class Graph {
         }
     }
 
-    private static void createInitialVertices(String header, Graph graph) {
+    private static void createInitialVertices(String header, graphs.Graph graph) {
         int n = Integer.parseInt(header.split(" ")[1]);
 
         for(Integer i = 1; i <= n; i++){
@@ -120,15 +119,13 @@ public class Graph {
         }
     }
 
-    private static void configVertex(final String[] parts, Graph graph) {
+    private static void configVertex(final String[] parts, graphs.Graph graph) {
         Vertex vertex = graph.getVertex(parts[1]);
-        String alias = parts[4].equals(";") ? null : parts[4];
 
-        if (parts[2].equals("K")){
-            vertex.addKey(new Key(parts[3], graph, alias));
-        }
-        else if (parts[2].equals("L")){
-            vertex.addLock(new Lock(parts[3], graph, alias));
+        if (parts.length == 5){
+            String key = parts[3];
+            Double p = Double.parseDouble(parts[4]);
+            vertex.pkeys.put(key, p);
         }
     }
 
@@ -229,13 +226,5 @@ public class Graph {
 
     public void addAgent(String id, String start, String goal) {
         this.agents.add(new Agent(id, this, start, goal));
-    }
-
-    public void setPBRC(double PBRC) {
-        this.PBRC = PBRC;
-    }
-
-    public double getPBRC() {
-        return PBRC;
     }
 }

@@ -1,7 +1,7 @@
 package graphs;
 
 public abstract class GraphElement implements Comparable<GraphElement>{
-    String id;
+    public String id;
     Graph context;
     String alias;
 

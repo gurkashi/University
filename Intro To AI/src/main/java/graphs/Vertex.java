@@ -8,6 +8,7 @@ public class Vertex extends GraphElement {
     final Map<Vertex, Edge> neigbores;
     final Collection<Lock> locks;
     final Collection<Key> keys;
+    public final Map<String, Double> pkeys;
 
     public Vertex(String id, Graph context){
         super(id, context);
@@ -15,6 +16,7 @@ public class Vertex extends GraphElement {
         this.neigbores = new HashMap<Vertex, Edge>();
         this.locks = new ArrayList<Lock>();
         this.keys = new ArrayList<Key>();
+        this.pkeys = new HashMap<>();
     }
 
     @Override
