@@ -26,7 +26,10 @@ public abstract class Simulation {
     protected final Graph graph;
 
     public static void main(String args[]) throws IOException {
-        play();
+        //play();
+        Ex4 ex4 = new Ex4();
+
+        ex4.run();
     }
 
     private static void play() throws IOException {

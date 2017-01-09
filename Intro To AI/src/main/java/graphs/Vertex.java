@@ -8,7 +8,9 @@ public class Vertex extends GraphElement {
     final Map<Vertex, Edge> neigbores;
     final Collection<Lock> locks;
     final Collection<Key> keys;
+    public final Map<String, Double> ptable;
     public final Map<String, Double> pkeys;
+    public double p;
 
     public Vertex(String id, Graph context){
         super(id, context);
@@ -16,7 +18,24 @@ public class Vertex extends GraphElement {
         this.neigbores = new HashMap<Vertex, Edge>();
         this.locks = new ArrayList<Lock>();
         this.keys = new ArrayList<Key>();
+        this.ptable = new HashMap<>();
         this.pkeys = new HashMap<>();
+    }
+
+    public Collection<Vertex> getChildren(){
+        return getNeigbores();
+    }
+
+    public Collection<Vertex> getParents(){
+        Collection<Vertex> result = new ArrayList<>();
+
+        for (Vertex candidate: getContext().getVertices()){
+            if (candidate != this && candidate.neigbores.containsKey(this)){
+                result.add(candidate);
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -62,7 +81,15 @@ public class Vertex extends GraphElement {
                 .sortBy(new Comparator<Vertex>() {
                     @Override
                     public int compare(Vertex o1, Vertex o2) {
-                        return o1.getId().compareTo(o2.getId());
+                        if (o1.id.equals("BRC")){
+                            return -1;
+                        }
+                        else if (o1.id.equals("BRC")){
+                            return 1;
+                        }
+                        else {
+                            return o1.getId().compareTo(o2.getId());
+                        }
                     }
                 })
                 .copyTo(new TreeSet<Vertex>())
@@ -99,5 +126,25 @@ public class Vertex extends GraphElement {
 
     public Collection<Key> getKeys() {
         return keys;
+    }
+
+    private static Collection<String> getPermutations(Collection<String> rows, int rest){
+        if (rest == 0){
+            return rows;
+        }
+
+        Collection<String> addition = new ArrayList<>();
+        for (String row: rows){
+            addition.add(row + "T");
+            addition.add(row + "F");
+        }
+        return getPermutations(addition, rest-1);
+    }
+
+    public static Collection<String> getPermutations(int rest){
+        Collection<String> rows = new ArrayList<>();
+        rows.add("T");
+        rows.add("F");
+        return getPermutations(rows, rest - 1);
     }
 }
