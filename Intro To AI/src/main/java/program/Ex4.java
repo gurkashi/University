@@ -49,7 +49,7 @@ public class Ex4 {
                 String[] parts = line.split(" ");
                 Evidence e = new Evidence(parts[1], parts[2], parts[3].equals("t")? true :false);
                 evidences.add(e);
-                System.out.println("K" + parts[1] + " is " + (e.exists? "" : "not ") + "present at V" + e.vertex);
+                System.out.println("K" + parts[1] + " is " + (e.exists? "" : "not ") + "present at V" + parts[2]);
             }
             else if (line.toLowerCase().startsWith("brc")){
                 String[] parts = line.split(" ");
