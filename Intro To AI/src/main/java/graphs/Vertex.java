@@ -9,6 +9,11 @@ public class Vertex extends GraphElement {
     final Collection<Lock> locks;
     final Collection<Key> keys;
     public final Map<String, Double> pkeys;
+<<<<<<< Updated upstream
+=======
+    public final Map<String, Double> plocks;
+    public double p;
+>>>>>>> Stashed changes
 
     public Vertex(String id, Graph context){
         super(id, context);
@@ -17,6 +22,7 @@ public class Vertex extends GraphElement {
         this.locks = new ArrayList<Lock>();
         this.keys = new ArrayList<Key>();
         this.pkeys = new HashMap<>();
+        this.plocks = new HashMap<>();
     }
 
     @Override
